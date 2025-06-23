@@ -1,2 +1,6 @@
 python-dotenv
 tweepy
+pandas
+regex
+textblob
+nltk
