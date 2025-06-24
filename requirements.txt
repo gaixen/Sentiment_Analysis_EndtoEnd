@@ -4,3 +4,5 @@ pandas
 regex
 textblob
 nltk
+scipy
+transformers
