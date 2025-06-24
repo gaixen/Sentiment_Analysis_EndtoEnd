@@ -1,0 +1,40 @@
+stages:
+  data-loading:
+    cmd: python sentiment_analysis_twitter/SRC/'load the dataset.py'
+    deps:
+      - sentiment_analysis_twitter/SRC/'load the dataset.py'
+    outs:
+      - outputs/tweets.txt
+
+  data-preprocessing:
+    cmd: python sentiment_analysis_twitter/SRC/data_preprocessing.py
+    deps:
+      - outputs/tweets.txt
+      - sentiment_analysis_twitter/SRC/data_preprocessing.py
+    outs:
+      - outputs/cleaned_tweets.csv
+      - outputs/extracted_tweets.csv
+
+  VADER-sentiment-analysis:
+    cmd: python sentiment_analysis_twitter/SRC/VADER.py
+    deps:
+      - outputs/extracted_tweets.csv
+      - sentiment_analysis_twitter/SRC/VADER.py
+    outs:
+      - outputs/extracted_tweets.csv
+
+  RoBERTa-sentiment-analysis:
+    cmd: python sentiment_analysis_twitter/SRC/RoBERTa.py
+    deps:
+      - outputs/extracted_tweets.csv
+      - sentiment_analysis_twitter/SRC/RoBERTa.py
+    outs:
+      - outputs/extracted_tweets.csv
+
+  HuggingFace-sentiment-analysis:
+    cmd: python sentiment_analysis_twitter/SRC/pipeline.py
+    deps:
+      - outputs/extracted_tweets.csv
+      - sentiment_analysis_twitter/SRC/model_evaluation.py
+    outs:
+      - outputs/extracted_tweets.csv
